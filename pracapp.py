@@ -10,12 +10,10 @@ if uploaded_file is not None:
   st.metric("Rows", len(df))
   column = st.selectbox("Column", options=df.columns.tolist())
   filter_enabled = st.checkbox("Enable filter", value=False)
+  choices = sorted(df[column].dropna().astype(str).unique().tolist())
+  selected = st.multiselect("Values", options=choices, default=choices)
   filtered = df.copy()
-
-  if filter_enabled:
-    choices = sorted(df[column].dropna().astype(str).unique().tolist())
-    selected = st.multiselect("Values", options=choices, default=choices)
-    filtered = filtered[filtered[column].astype(str).isin(selected)]
+  filtered = filtered[filtered[column].astype(str).isin(selected)]
   st.dataframe(filtered)
   st.metric("Filtered rows", filtered.shape[0])
   counts = filtered[column].astype(str).fillna("Missing").value_counts()
