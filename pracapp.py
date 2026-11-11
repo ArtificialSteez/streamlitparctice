@@ -16,9 +16,9 @@ if uploaded_file is not None:
     choices = sorted(df[column].dropna().astype(str).unique().tolist())
     selected = st.multiselect("Values", options=choices, default=choices)
     filtered = filtered[filtered[column].astype(str).isin(selected)]
-st.dataframe(filtered)
-st.metric("Filtered rows", filtered.shape[0])
-counts = filtered[column].astype(str).fillna("Missing").value_counts()
-st.bar_chart(counts)
-st.download_button("Download CSV", filtered.to_csv(index=False), file_name="filtered.csv", mime="text/csv")
+  st.dataframe(filtered)
+  st.metric("Filtered rows", filtered.shape[0])
+  counts = filtered[column].astype(str).fillna("Missing").value_counts()
+  st.bar_chart(counts)
+  st.download_button("Download CSV", filtered.to_csv(index=False), file_name="filtered.csv", mime="text/csv")
 
